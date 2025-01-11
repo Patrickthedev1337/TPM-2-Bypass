@@ -2,7 +2,7 @@ import winreg as reg
 import ctypes
 
 def modify_registry():
-    # Pfad zum Schlüssel
+
     reg_path = r"SYSTEM\Setup\MoSetup"
     value_name = "AllowUpgradesWithUnsupportedTPMOrCPU"
     value_data = 1
