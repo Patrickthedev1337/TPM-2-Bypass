@@ -1,13 +1,27 @@
-# TPM-2-Bypass
+This tool sets the official Microsoft registry key to allow installing Windows 11
+on systems without TPM 2.0 or a supported CPU.
 
-I made a TPM 2 bypass so you can install win 11 without having to boot over usb or something
-You need to have a win 11 bootable iso!
+No USB boot required.
 
-How to set up:
-Press rightclick on the iso
-Press: mount or on german: Bereitstellen
-Than compile the .py to exe!
-Than go onto the DVD drive (it got created by mounting it!)
-and now run Setup! done!
+Requirements:
+- A Windows 11 bootable ISO file
+- Administrator privileges
 
-(Optional: Disable internet while downloading! if you change the dword it creates to 0 again it will stop working when tryin to update just let it be 1 so you can update!)
+How to use:
+1. Right-click the Windows 11 ISO and select "Mount" (German: "Bereitstellen")
+2. Compile the .py file to an .exe and run it as Administrator
+3. Open the mounted ISO (it appears as a DVD drive)
+4. Run setup.exe
+5. Done
+
+Optional:
+- You can disable the internet during setup (not required)
+- Do NOT set the created DWORD back to 0 if you want Windows Update to keep working
+
+Registry key used:
+HKLM\SYSTEM\Setup\MoSetup
+AllowUpgradesWithUnsupportedTPMOrCPU = 1
+
+Note:
+This does not crack or modify Windows.
+It uses an official Microsoft workaround for unsupported hardware.
