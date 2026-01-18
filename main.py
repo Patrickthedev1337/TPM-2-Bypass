@@ -1,26 +1,28 @@
 import winreg as reg
 import ctypes
+import sys
+
+REG_PATH = r"SYSTEM\Setup\MoSetup"
+VALUE_NAME = "AllowUpgradesWithUnsupportedTPMOrCPU"
+VALUE_DATA = 1
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
 
 def modify_registry():
-
-    reg_path = r"SYSTEM\Setup\MoSetup"
-    value_name = "AllowUpgradesWithUnsupportedTPMOrCPU"
-    value_data = 1
+    if not is_admin():
+        print("[-] Please run this script as Administrator.")
+        sys.exit(1)
 
     try:
-
-        if not ctypes.windll.shell32.IsUserAnAdmin():
-            raise PermissionError("Please run as admin!")
-
-
-        with reg.CreateKey(reg.HKEY_LOCAL_MACHINE, reg_path) as key:
-
-            reg.SetValueEx(key, value_name, 0, reg.REG_DWORD, value_data)
-            print(f"Dwort '{value_name}' setted  {value_data} Step 1")
-    except PermissionError as pe:
-        print(f"Error: {pe}")
+        with reg.CreateKey(reg.HKEY_LOCAL_MACHINE, REG_PATH) as key:
+            reg.SetValueEx(key, VALUE_NAME, 0, reg.REG_DWORD, VALUE_DATA)
+            print(f"[+] Registry value '{VALUE_NAME}' set to {VALUE_DATA}")
     except Exception as e:
-        print(f"Unexpected Error !: {e}")
+        print(f"[!] Error while modifying registry: {e}")
 
 if __name__ == "__main__":
     modify_registry()
